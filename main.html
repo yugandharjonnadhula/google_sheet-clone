@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal JavaScript Example</title>
+</head>
+<body>
+    <input type="number" id="ip" />
+    <button id="btn">Start</button>
+    <div id="output"></div>
+
+    <script>
+        // Your internal JavaScript code goes here
+
+        // Get references to the HTML elements
+        const output = document.getElementById("output");
+        const input = document.getElementById("ip");
+        const btn = document.getElementById("btn");
+
+        // Add an event listener to the button
+        btn.addEventListener('click', createInitialPromise);
+
+        // Function to create a promise with a delay
+        const delayPromise = (value, delay) => new Promise((resolve, reject) => {
+            setTimeout(() => resolve(value), delay);
+        });
+
+        // Function to handle the promise chain
+        function createInitialPromise() {
+            const userTypedValue = Number(input.value); // Ensure the value is a number
+
+            delayPromise(userTypedValue, 2000) // Start with the initial promise
+                .then((result) => {
+                    output.textContent = `Result: ${result}`; // Use template literals correctly
+                    return delayPromise(result * 2, 1000);
+                })
+                .then((result) => {
+                    output.textContent = `Result: ${result}`; // Use template literals correctly
+                    return delayPromise(result - 3, 1000);
+                })
+                .then((result) => {
+                    output.textContent = `Result: ${result}`; // Use template literals correctly
+                    return delayPromise(result / 2, 1000);
+                })
+                .then((result) => {
+                    output.textContent = `Result: ${result}`; // Use template literals correctly
+                    return delayPromise(result + 10, 1000);
+                })
+                .then((final) => {
+                    output.textContent = `Final Result: ${final}`; // Use template literals correctly
+                });
+        }
+    </script>
+</body>
+</html>
